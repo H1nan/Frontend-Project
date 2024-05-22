@@ -1,57 +1,122 @@
-import { useQuery } from "@tanstack/react-query"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { Button } from "./components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "./components/ui/card"
-import { Product } from "./types"
-import api from "./api"
-
+import { Dashboard } from "./Pages/dashboard"
+import { Home } from "./Pages/home"
 import "./App.css"
+import { createContext, useEffect, useState } from "react";
+import { DecodedUser, Product } from "./types";
+import { ProductDetails } from "./Pages/productDetails";
+import { Login } from "./Pages/login";
+import { Signup } from "./Pages/signup";
+import { WithAuth } from "./components/WithAuth";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/dashboard",
+    element: (<WithAuth>
+      <Dashboard />
+    </WithAuth>
+    )
+  },
+  {
+    path: "/products/:productId",
+    element: <ProductDetails />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  }
+])
+
+type GlobalContextType = {
+  state: GlobalState,
+  handleAddToCart: (product: Product) => void
+  handleDelCart: (id: string) => void
+  handleStoreUser: (user: DecodedUser) => void
+  handleAfterCheckout: () => void
+  handleOut: () => void
+}
+
+type GlobalState = {
+  cart: Product[]
+  user: DecodedUser | null
+}
+export const GlobalContext = createContext<GlobalContextType | null>(null)
 
 function App() {
-  const getProducts = async () => {
-    try {
-      const res = await api.get("/products")
-      return res.data
-    } catch (error) {
-      console.error(error)
-      return Promise.reject(new Error("Something went wrong"))
-    }
-  }
-
-  // Queries
-  const { data, error } = useQuery<Product[]>({
-    queryKey: ["products"],
-    queryFn: getProducts
+  const [state, setState] = useState<GlobalState>({
+    cart: [],
+    user: null
   })
 
-  return (
-    <div className="App">
-      <h1 className="text-2xl uppercase mb-10">Products</h1>
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+    if (user) {
+      const decodedUser = JSON.parse(user)
+      setState({
+        ...state,
+        user: decodedUser
+      })
+    }
+  }, [])
 
-      <section className="flex flex-col md:flex-row gap-4 justify-between max-w-6xl mx-auto">
-        {data?.map((product) => (
-          <Card key={product.id} className="w-[350px]">
-            <CardHeader>
-              <CardTitle>{product.name}</CardTitle>
-              <CardDescription>Some Description here</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>Card Content Here</p>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full">Add to cart</Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </section>
-      {error && <p className="text-red-500">{error.message}</p>}
+  const handleAddToCart = (product: Product) => {
+    // const isDublicated = state.cart.find(cartItem => cartItem.id === product.id)
+
+    // if (isDublicated) return
+    setState({
+      ...state,
+      cart: [...state.cart, product]
+    })
+  }
+
+  const handleStoreUser = (user: DecodedUser) => {
+    setState({
+      ...state,
+      user
+    })
+  }
+
+  const handleDelCart = (id: string) => {
+    const cart = state.cart
+    const index = state.cart.findIndex(item => item.id === id)
+    cart.splice(index, 1)
+
+    setState({
+      ...state,
+      cart: cart
+      // const filteredCart = state.cart.filter(item => item.id !== id)
+    })
+  }
+
+  const handleAfterCheckout = () => {
+    setState({
+      ...state,
+      cart: []
+    })
+  }
+
+  const handleOut = () => {
+    setState({
+      ...state,
+      // cart: [],
+      user: null
+    })
+  }
+
+  return (
+    <div>
+      <GlobalContext.Provider value={{ state, handleAddToCart, handleDelCart, handleStoreUser, handleAfterCheckout, handleOut }}>
+        <RouterProvider router={router} />
+      </GlobalContext.Provider>
     </div>
   )
 }
