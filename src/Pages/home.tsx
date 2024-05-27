@@ -4,11 +4,12 @@ import { NavBar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Product } from "@/types"
+import { ProductWithStock } from "@/types"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { PlusIcon, Search } from "lucide-react"
 import { ChangeEvent, FormEvent, useContext, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
+import hero from "../hero/Green Photographic Environment Charity Bio-Link Website.png"
 
 export function Home() {
     const context = useContext(GlobalContext)
@@ -24,8 +25,8 @@ export function Home() {
             return Promise.reject(new Error("Something went wrong"))
         }
     }
-    // Queries
-    const { data, error } = useQuery<Product[]>({
+
+    const { data, error } = useQuery<ProductWithStock[]>({
         queryKey: ["products"],
         queryFn: getProducts
     })
@@ -52,40 +53,53 @@ export function Home() {
         })
     }
 
-    return (
-        <div>
-            <NavBar />
-            <div>
 
-                <form onSubmit={handleSearch} className="flex gap-4 w-full md:w-1/2 mx-auto mb-10">
+    return (
+
+        <div >
+            < NavBar />
+            <img src={hero} alt="logo" className=" rounded-md w-11/12 mt-14 mx-auto" />
+            <div>
+                <p className="text-2xl mt-10 font-mono">Our Greens 🌱</p>
+
+                <form onSubmit={handleSearch} className="flex gap-4 w-full md:w-1/2 mx-auto mt-10">
                     <Input type="search" placeholder="Search" onChange={handleChange} value={searchBy} />
                     <Button type="submit"> <Search /> </Button>
-                </form>
 
-                {data?.length === 0 && <p className=" mt-20 font-medium">No Product Found!</p>}
-                <section className="flex flex-col flex-wrap md:flex-row gap-4 justify-between max-w-6xl mx-auto">
+                </form>
+                {data?.length === 0 && <p className="mt-10 font-mono">No Product Found!</p>}
+
+                <section className="flex flex-col flex-wrap md:flex-row gap-4 justify-between max-w-6xl mx-auto mt-10 font-mono">
                     {data?.map((product) => (
-                        <Card key={product.id} className="w-[350px]">
+                        <Card key={product.id} className="w-[330px]">
                             <CardHeader>
-                                <img src={product.image} alt={product.name} />
+                                <img src={product.image} alt={product.name} className=" w-80 h-80 object-fit rounded-lg mb-3" />
                                 <CardTitle>{product.name}</CardTitle>
-                                <CardDescription>{product.description}</CardDescription>
+                                <CardDescription className="h-14">{product.description.slice(0, 100)}...</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <p>Card Content Here</p>
                             </CardContent>
+
+
                             <CardFooter className=" justify-between">
                                 <Button variant="default">
                                     <Link to={`/products/${product.id}`}>Details</Link>
                                 </Button>
-                                <Button variant="outline" onClick={() => handleAddToCart(product)}>
-                                    <PlusIcon /></Button>
+                                <p>{product.price} SR</p>
+                                {
+                                    product.quantity ? (
+                                        <Button variant="outline" onClick={() => handleAddToCart(product)}>
+                                            <PlusIcon />
+                                        </Button>)
+                                        : <p className=" text-xs text-red-600">Out of stock</p>
+                                }
+
                             </CardFooter>
                         </Card>
                     ))}
                 </section>
                 {error && <p className="text-red-500">{error.message}</p>}
             </div>
-        </div>
+        </div >
     )
 }

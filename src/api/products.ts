@@ -1,4 +1,4 @@
-import { Product, ProductWithoutId } from "@/types"
+import { ProductWithoutId } from "@/types"
 import api from "."
 
 export default {
@@ -19,12 +19,12 @@ export default {
             return Promise.reject(new Error("Something went wrong"))
         }
     },
-    // deleteOne: async (id: string) => {
-    //     try {
-    //         const res = await api.delete(`/products/${id}`)
-    //         return res.data
-    //     } catch (error) {
-    //         return Promise.reject(new Error("Something went wrong"))
-    //     }
-    // }
+    deleteOne: async (id: string) => {
+        try {
+            const res = await api.delete(`/products/${id}`)
+            return res.data
+        } catch (error) {
+            return Promise.reject(new Error("Something went wrong"))
+        }
+    }
 }

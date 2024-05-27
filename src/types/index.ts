@@ -6,6 +6,29 @@ export type Product = {
   description: string
 }
 
+export type ProductWithStock = Product & {
+  quantity: number
+  price: number
+}
+
+export type Stock = {
+  id: string
+  productId: string
+  stockQuantity: number
+  price: number
+  color?: string
+  size?: string
+}
+
+export type CreateStock = {
+  productId: string
+  stockQuantity: number
+  price: number
+  color?: string
+  size?: string
+}
+
+
 export type Category = {
   id: string
   name: string
@@ -35,5 +58,6 @@ export type DecodedUser = {
   nameidentifier: string
   role: keyof typeof ROLE
 }
+
 export type ProductWithoutId = Omit<Product, "id">
 

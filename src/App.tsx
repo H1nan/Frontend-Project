@@ -4,11 +4,13 @@ import { Dashboard } from "./Pages/dashboard"
 import { Home } from "./Pages/home"
 import "./App.css"
 import { createContext, useEffect, useState } from "react";
-import { DecodedUser, Product } from "./types";
+import { DecodedUser, ProductWithStock } from "./types";
 import { ProductDetails } from "./Pages/productDetails";
 import { Login } from "./Pages/login";
 import { Signup } from "./Pages/signup";
-import { WithAuth } from "./components/WithAuth";
+import { WithAuth } from "./components/withAuth";
+import { AboutUs } from "./Pages/aboutUs";
+import { Categoryies } from "./Pages/categories";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
     element: <ProductDetails />,
   },
   {
+    path: "/aboutUs",
+    element: <AboutUs />,
+  },
+  {
+    path: "/categories",
+    element: <Categoryies />,
+  },
+  {
     path: "/login",
     element: <Login />,
   },
@@ -38,7 +48,7 @@ const router = createBrowserRouter([
 
 type GlobalContextType = {
   state: GlobalState,
-  handleAddToCart: (product: Product) => void
+  handleAddToCart: (product: ProductWithStock) => void
   handleDelCart: (id: string) => void
   handleStoreUser: (user: DecodedUser) => void
   handleAfterCheckout: () => void
@@ -46,7 +56,7 @@ type GlobalContextType = {
 }
 
 type GlobalState = {
-  cart: Product[]
+  cart: ProductWithStock[]
   user: DecodedUser | null
 }
 export const GlobalContext = createContext<GlobalContextType | null>(null)
@@ -68,10 +78,11 @@ function App() {
     }
   }, [])
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (product: ProductWithStock) => {
     // const isDublicated = state.cart.find(cartItem => cartItem.id === product.id)
 
     // if (isDublicated) return
+
     setState({
       ...state,
       cart: [...state.cart, product]
@@ -92,8 +103,8 @@ function App() {
 
     setState({
       ...state,
-      cart: cart
-      // const filteredCart = state.cart.filter(item => item.id !== id)
+      cart: cart,
+      // const: filteredCart = state.cart.filter(item => item.id !== id)
     })
   }
 
