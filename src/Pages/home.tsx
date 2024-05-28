@@ -10,6 +10,7 @@ import { PlusIcon, Search } from "lucide-react"
 import { ChangeEvent, FormEvent, useContext, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import hero from "../hero/Green Photographic Environment Charity Bio-Link Website.png"
+import Footer from "@/components/footer"
 
 export function Home() {
     const context = useContext(GlobalContext)
@@ -100,6 +101,7 @@ export function Home() {
                 </section>
                 {error && <p className="text-red-500">{error.message}</p>}
             </div>
+            <Footer />
         </div >
     )
 }

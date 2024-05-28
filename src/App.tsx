@@ -11,6 +11,7 @@ import { Signup } from "./Pages/signup";
 import { WithAuth } from "./components/withAuth";
 import { AboutUs } from "./Pages/aboutUs";
 import { Categoryies } from "./Pages/categories";
+import Footer from "./components/footer";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/products/:productId",
     element: <ProductDetails />,
+  },
+  {
+    path: "/footer",
+    element: <Footer />,
   },
   {
     path: "/aboutUs",
