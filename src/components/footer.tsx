@@ -1,12 +1,18 @@
 import { InstagramIcon, TwitterIcon, Youtube } from "lucide-react"
 import { Link } from "react-router-dom"
+import { Button } from "./ui/button"
 
 export default function Footer() {
 
     return (
-        <footer className="bg-[#F5EFE6] mt-10 p-4 md:py-6 w-full dark:bg-gray-800">
+        <footer className="bg-[#F5EFE6] mt-10 p-6 md:py-6 w-full dark:bg-gray-800 font-mono">
             <div className="container max-w-7xl flex flex-col items-center justify-between gap-4 md:flex-row">
-                <p className="text-sm text-gray-500 dark:text-gray-400">© 2024. All rights reserved.</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">© Planty 2024 | All rights reserved.</p>
+                <div >
+                    <Button className=" text-gray-500" variant="link">Order Policy</Button>
+                    <Button className=" text-gray-500" variant="link">Common questions?</Button>
+
+                </div>
                 <div className="flex items-center gap-4">
                     <Link className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" to="https://x.com">
                         <TwitterIcon className="h-5 w-5 " />
@@ -21,6 +27,7 @@ export default function Footer() {
                         <span className="sr-only">YouTube</span>
                     </Link>
                 </div>
+
             </div>
         </footer >
     )

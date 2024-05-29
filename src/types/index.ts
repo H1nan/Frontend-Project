@@ -9,6 +9,8 @@ export type Product = {
 export type ProductWithStock = Product & {
   quantity: number
   price: number
+  color: string
+  size: string
 }
 
 export type Stock = {

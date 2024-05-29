@@ -7,11 +7,10 @@ import { createContext, useEffect, useState } from "react";
 import { DecodedUser, ProductWithStock } from "./types";
 import { ProductDetails } from "./Pages/productDetails";
 import { Login } from "./Pages/login";
-import { Signup } from "./Pages/signup";
 import { WithAuth } from "./components/withAuth";
 import { AboutUs } from "./Pages/aboutUs";
 import { Categoryies } from "./Pages/categories";
-import Footer from "./components/footer";
+import Signup from "./Pages/signup";
 
 const router = createBrowserRouter([
   {
@@ -30,10 +29,6 @@ const router = createBrowserRouter([
     element: <ProductDetails />,
   },
   {
-    path: "/footer",
-    element: <Footer />,
-  },
-  {
     path: "/aboutUs",
     element: <AboutUs />,
   },
@@ -45,6 +40,7 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
+
   {
     path: "/signup",
     element: <Signup />,
@@ -84,10 +80,6 @@ function App() {
   }, [])
 
   const handleAddToCart = (product: ProductWithStock) => {
-    // const isDublicated = state.cart.find(cartItem => cartItem.id === product.id)
-
-    // if (isDublicated) return
-
     setState({
       ...state,
       cart: [...state.cart, product]
@@ -109,7 +101,6 @@ function App() {
     setState({
       ...state,
       cart: cart,
-      // const: filteredCart = state.cart.filter(item => item.id !== id)
     })
   }
 
@@ -123,7 +114,7 @@ function App() {
   const handleOut = () => {
     setState({
       ...state,
-      // cart: [],
+      cart: [],
       user: null
     })
   }

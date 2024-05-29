@@ -1,10 +1,12 @@
+
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import api from "@/api";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export function Signup() {
+export default function Signup() {
     const navigate = useNavigate()
     const [user, setUser] = useState({
         fullName: "",
@@ -40,22 +42,91 @@ export function Signup() {
         }
     }
 
+
     return (
-        <div>
-            <h3>Creat an account</h3>
-            <form action="POST" onSubmit={handleSubmit} className="w-full md:w-1/2 mx-auto">
-                <Input name="fullName" className="mt-4" type="text" placeholder="Full name" onChange={handleChange} />
-                <Input name="email" className="mt-4" type="text" placeholder="Email" onChange={handleChange} />
-                <Input name="password" className="mt-4" type="password" placeholder="Password" onChange={handleChange} />
-                <Input name="countryCode" className="mt-4" type="text" placeholder="Country code" onChange={handleChange} />
-                <Input name="phone" className="mt-4" type="text" placeholder="Phone number" onChange={handleChange} />
-                <Button onSubmit={handleSubmit} className=" mt-4">Sign up</Button>
-                <div className="mt-7">
-                    <Button variant="link">
-                        <Link to="/login">Already have an account?</Link>
-                    </Button>
+
+        <div className=" w-full flex items-center justify-center mb-9 bg-[url('src/hero/signup.png')] bg-cover" >
+
+            <div className="relative text-center space-y-6 px-4 md:px-6 mt-24 pb-20 font-mono">
+                <div className="space-y-2 text-center">
+                    <h1 className="text-3xl font-bold">Create an Account</h1>
+                    <p className="text-gray-500 dark:text-gray-400">Join our community and feel alive 🌿</p>
                 </div>
-            </form>
+                <form action="POST" className="space-y-6 text-left w-96" onSubmit={handleSubmit}>
+                    <div className="space-y-2">
+                        <Label className="font-medium" htmlFor="name">
+                            Full Name
+                        </Label>
+                        <Input
+                            className="border-gray-300 dark:border-gray-700 focus:border-primary focus:ring-primary"
+                            name="name"
+                            placeholder="Abdullah Saad"
+                            required
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label className="font-medium" htmlFor="email">
+                            Email Address
+                        </Label>
+                        <Input
+                            className="border-gray-300 dark:border-gray-700 focus:border-primary focus:ring-primary"
+                            name="email"
+                            placeholder="m@example.com"
+                            required
+                            type="email"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label className="font-medium" htmlFor="password">
+                            Password
+                        </Label>
+                        <Input
+                            className="border-gray-300 dark:border-gray-700 focus:border-primary focus:ring-primary"
+                            name="password"
+                            required
+                            type="password"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label className="font-medium" htmlFor="email">
+                            Country Code
+                        </Label>
+                        <Input
+                            className="border-gray-300 dark:border-gray-700 focus:border-primary focus:ring-primary"
+                            name="conunrtyCode"
+                            placeholder="ex:00966"
+                            required
+                            type="text"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label className="font-medium" htmlFor="email">
+                            Phone Number
+                        </Label>
+                        <Input
+                            className="border-gray-300 dark:border-gray-700 focus:border-primary focus:ring-primary"
+                            name="phone"
+                            placeholder="ex:123456789"
+                            required
+                            type="text"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <Button onSubmit={handleSubmit} className="w-full bg-primary text-white hover:bg-primary/90 focus:ring-primary" type="submit">
+                        Create Account
+                    </Button>
+                </form>
+                <div className="text-center text-gray-500 dark:text-gray-400">
+                    <p className=" inline gap-3"> Already have an account? </p>
+                    <Link className="font-medium text-primary hover:underline" to={"/login"}>
+                        Sign In
+                    </Link>
+                </div>
+            </div>
         </div>
     )
 }

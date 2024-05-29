@@ -3,10 +3,10 @@ import api from "@/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { reshapeUser } from "@/lib/utils";
+import { Label } from "@radix-ui/react-label";
 import jwtDecode from "jwt-decode";
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { json } from "stream/consumers";
 
 export function Login() {
     const navigate = useNavigate()
@@ -52,19 +52,48 @@ export function Login() {
     }
 
     return (
-        <div>
-            <h3>LOGIN</h3>
-            <form action="POST" onSubmit={handleSubmit} className="w-full md:w-1/2 mx-auto">
-                <Input name="email" className="mt-4" type="text" placeholder="Email" onChange={handleChange} />
-                <Input name="password" className="mt-4" type="password" placeholder="Password" onChange={handleChange} />
-                <Button onSubmit={handleSubmit} className=" mt-4">Login</Button>
-
-                <div className="mt-7">
-                    <Button variant="link">
-                        <Link to="/signup" > New? Join now</Link>
+        <div className=" w-full flex items-center justify-center mb-9 bg-[url('src/hero/signup.png')] bg-cover">
+            <div className=" inline-block max-w-sm space-y-6 pt-24 pb-32 w-auto font-mono" >
+                < div className="space-y-2 text-center" >
+                    <h1 className="text-3xl font-bold">Welcome back 🤍</h1>
+                </div >
+                <form action="POST" className="space-y-6 text-left w-96" onSubmit={handleSubmit}>
+                    <div className="space-y-2">
+                        <Label className="font-medium" htmlFor="email">
+                            Email Address
+                        </Label>
+                        <Input
+                            className="border-gray-300 dark:border-gray-700 focus:border-primary focus:ring-primary"
+                            name="email"
+                            placeholder="m@example.com"
+                            required
+                            type="email"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label className="font-medium" htmlFor="password">
+                            Password
+                        </Label>
+                        <Input
+                            className="border-gray-300 dark:border-gray-700 focus:border-primary focus:ring-primary"
+                            name="password"
+                            required
+                            type="password"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <Button onSubmit={handleSubmit} className="w-full bg-primary text-white hover:bg-primary/90 focus:ring-primary" type="submit">
+                        Sign In
                     </Button>
+                </form>
+                <div className="text-center text-gray-500 dark:text-gray-400">
+                    <p className=" inline gap-3"> New? </p>
+                    <Link className="font-medium text-primary hover:underline" to={"/signup"}>
+                        Sign Up now
+                    </Link>
                 </div>
-            </form>
-        </div>
+            </div >
+        </div >
     )
 }

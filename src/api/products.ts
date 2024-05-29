@@ -11,6 +11,7 @@ export default {
             return Promise.reject(new Error("Something went wrong"))
         }
     },
+
     createOne: async (product: ProductWithoutId) => {
         try {
             const res = await api.post("/products", product)

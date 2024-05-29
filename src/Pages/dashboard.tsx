@@ -156,120 +156,115 @@ export function Dashboard() {
     return (
         <div className=" font-mono">
             <NavBar />
-            < form className="mt-20 w-1/3 mx-auto" onSubmit={handleSubmit}>
-                <h3 className="scroll-m-20 font-semibold tracking-tight">ADD PRODUCT</h3>
+            <form className="mt-20 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto p-6 bg-white rounded-lg shadow-lg" onSubmit={handleSubmit}>
+                <h3 className="font-semibold text-lg tracking-tight mb-4">ADD PRODUCT</h3>
 
-                <select className="mt-4" onChange={handleSelect} name="categoryId" value={product.categoryId}>
-                    <option selected>Select a choice</option>
-                    {categories?.map((cat) => {
-                        return (
-                            <option key={cat.id} value={cat.id}>
-                                {cat.name}
-                            </option>
-                        )
-                    })}
+                <select className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" onChange={handleSelect} name="categoryId" value={product.categoryId}>
+                    <option value="" disabled>Select a choice</option>
+                    {categories?.map((cat) => (
+                        <option key={cat.id} value={cat.id}>
+                            {cat.name}
+                        </option>
+                    ))}
                 </select>
 
-                <Input name="image" className="mt-4" type="text" placeholder="Image Link" onChange={handleChange} />
-                <Input name="name" className="mt-4" type="text" placeholder="Name" onChange={handleChange} />
-                <Input name="description" className="mt-4" type="text" placeholder="Description" onChange={handleChange} />
+                <Input name="image" className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="text" placeholder="Image Link" onChange={handleChange} />
+                <Input name="name" className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="text" placeholder="Name" onChange={handleChange} />
+                <Input name="description" className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="text" placeholder="Description" onChange={handleChange} />
 
-                <div className="mt-4 space-x-4">
-                    <Button type="submit" onSubmit={handleSubmit}>Submit</Button>
-                    <Button type="reset" onSubmit={handleSubmit}>Reset</Button>
+                <div className="mt-4 flex justify-between">
+                    <Button type="submit" className="px-4 py-2 text-white rounded-md">Submit</Button>
+                    <Button type="reset" className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">Reset</Button>
                 </div>
-            </form >
+            </form>
 
-
-            <div>
-                <h1 className="scroll-m-20 mt-10 text-4x1 font-semibold tracking-tight">Products</h1>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Image</TableHead>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Category</TableHead>
-                            <TableHead>Description</TableHead>
-                            <TableHead>Delete</TableHead>
-                            <TableHead>Edit</TableHead>
-
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {productWithCat?.map((product) => (
-                            <TableRow key={product.id}>
-                                <TableCell className="text-left w-3 h-3"><img src={product.image} /></TableCell>
-                                <TableCell className="text-left">{product.name}</TableCell>
-                                <TableCell className="text-left">{product.categoryName}</TableCell>
-                                <TableCell className="text-left">{product.description}</TableCell>
-
-                                <TableCell className="text-left">
-                                    <Button variant="destructive" onClick={() => handleDeleteProduct(product.id)}>X</Button>
-                                </TableCell>
-
-                                <TableCell className=" text-left">
-                                    <EditDialog product={product} ></EditDialog>
-                                </TableCell>
+            <div className="mt-10">
+                <h1 className="text-4xl font-semibold tracking-tight mb-4">Products</h1>
+                <div className="">
+                    <Table className="min-w-full divide-y divide-gray-200">
+                        <TableHeader className="bg-gray-50">
+                            <TableRow>
+                                <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</TableHead>
+                                <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</TableHead>
+                                <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</TableHead>
+                                <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</TableHead>
+                                <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delete</TableHead>
+                                <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Edit</TableHead>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody className="bg-white divide-y divide-gray-200 text-left">
+                            {productWithCat?.map((product) => (
+                                <TableRow key={product.id} className="hover:bg-gray-100">
+                                    <TableCell className="px-6 py-4 whitespace-nowrap">
+                                        <img src={product.image} alt={product.name} className="w-14 h-14 object-cover rounded-md" />
+                                    </TableCell>
+                                    <TableCell className="px-6 py-4 ">{product.name}</TableCell>
+                                    <TableCell className="px-6 py-4 ">{product.categoryName}</TableCell>
+                                    <TableCell className="px-6 py-4 ">{product.description}</TableCell>
+                                    <TableCell className="px-6 py-4 ">
+                                        <Button variant="destructive" className="px-2 py-1 w-7 bg-red-600 text-white rounded-md hover:bg-red-700" onClick={() => handleDeleteProduct(product.id)}>X</Button>
+                                    </TableCell>
+                                    <TableCell className="px-6 py-4 ">
+                                        <EditDialog product={product} />
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
 
             {/* TABLE 2 STOCK */}
 
-            <form className="mt-20 w-1/3 mx-auto" onSubmit={handleSubmitStock}>
-                <h3 className="scroll-m-20 font-semibold tracking-tight">ADD STOCK</h3>
+            <form className="mt-20 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto p-6 bg-white rounded-lg shadow-lg" onSubmit={handleSubmitStock}>
+                <h3 className="font-semibold text-lg tracking-tight mb-4">ADD STOCK</h3>
 
-                <select className="mt-4" onChange={handleSelectProduct} name="productId">
-                    <option selected>Select a choice</option>
-                    {products?.map((product) => {
-                        return (
-                            <option key={product.id} value={product.id}>
-                                {product.name}
-                            </option>
-                        )
-                    })}
+                <select className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" onChange={handleSelectProduct} name="productId" value="">
+                    <option value="" disabled>Select a choice</option>
+                    {products?.map((product) => (
+                        <option key={product.id} value={product.id}>
+                            {product.name}
+                        </option>
+                    ))}
                 </select>
 
-                <Input name="color" className="mt-4" type="text" placeholder="Color" onChange={handleChangeStock} />
-                <Input name="size" className="mt-4" type="text" placeholder="Size" onChange={handleChangeStock} />
-                <Input name="stockQuantity" className="mt-4" type="number" placeholder="Quantity" onChange={handleChangeStock} />
-                <Input name="price" className="mt-4" type="number" placeholder="Price" onChange={handleChangeStock} />
+                <Input name="color" className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="text" placeholder="Color" onChange={handleChangeStock} />
+                <Input name="size" className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="text" placeholder="Size" onChange={handleChangeStock} />
+                <Input name="stockQuantity" className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="number" placeholder="Quantity" onChange={handleChangeStock} />
+                <Input name="price" className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="number" placeholder="Price" onChange={handleChangeStock} />
 
-                <div className="mt-4 space-x-4">
-                    <Button type="submit" onSubmit={handleSubmitStock}>Submit</Button>
-                    <Button type="reset">Reset</Button>
+                <div className="mt-4 flex justify-between">
+                    <Button type="submit" className="px-4 py-2 text-white rounded-md">Submit</Button>
+                    <Button type="reset" className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">Reset</Button>
                 </div>
-            </form >
-            <div>
-                <Table>
-                    <TableHeader>
+            </form>
+
+            <div className="mt-10">
+                <Table className="min-w-full divide-y divide-gray-200 text-left">
+                    <TableHeader className="bg-gray-50">
                         <TableRow>
-                            <TableHead>Product Image</TableHead>
-                            <TableHead>Product Name</TableHead>
-                            <TableHead>Color</TableHead>
-                            <TableHead>Size</TableHead>
-                            <TableHead>Quantity</TableHead>
-                            <TableHead>Price</TableHead>
-                            <TableHead>Action</TableHead>
+                            <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Image</TableHead>
+                            <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</TableHead>
+                            <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Color</TableHead>
+                            <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</TableHead>
+                            <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</TableHead>
+                            <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</TableHead>
+                            <TableHead className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</TableHead>
                         </TableRow>
                     </TableHeader>
 
-                    <TableBody>
+                    <TableBody className="bg-white divide-y divide-gray-200">
                         {productWithStock?.map((stock) => (
-                            <TableRow key={stock.id}>
-                                <TableCell className="text-left w-3 h-3"><img src={stock.image} alt="" /></TableCell>
-                                <TableCell className="text-left">{stock.productName}</TableCell>
-                                <TableCell className="text-left">{stock.color}</TableCell>
-                                <TableCell className="text-left">{stock.size}</TableCell>
-                                <TableCell className="text-left">{stock.stockQuantity}</TableCell>
-                                <TableCell className="text-left">{stock.price}</TableCell>
-
-                                <TableCell className="text-left">
-                                    <Button variant="destructive" onClick={() => handleDeleteStock(stock.id)}>X</Button>
+                            <TableRow key={stock.id} className="hover:bg-gray-100">
+                                <TableCell className="px-6 py-4"><img src={stock.image} alt={stock.productName} className="w-10 h-10 object-cover rounded-md" /></TableCell>
+                                <TableCell className="px-6 py-4">{stock.productName}</TableCell>
+                                <TableCell className="px-6 py-4">{stock.color}</TableCell>
+                                <TableCell className="px-6 py-4">{stock.size}</TableCell>
+                                <TableCell className="px-6 py-4">{stock.stockQuantity}</TableCell>
+                                <TableCell className="px-6 py-4">{stock.price}</TableCell>
+                                <TableCell className="px-6 py-4 align-middle">
+                                    <Button variant="destructive" className="px-2 py-1 bg-red-600 text-white rounded-md hover:bg-red-700" onClick={() => handleDeleteStock(stock.id)}>X</Button>
                                 </TableCell>
-
                             </TableRow>
                         ))}
                     </TableBody>
