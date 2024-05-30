@@ -48,7 +48,7 @@ export function ProductDetails() {
     return (
         <>
             <NavBar />
-            <section className=" mt-15 grid md:grid-cols-2 gap-8 lg:gap-16 items-start max-w-6xl px-6 mx-auto py-14 md:py-18 lg:py-26 font-mono bg-gradient-to-r from-[#094a03aa] via-[#33834851] to-[#3aa8574a] rounded-lg shadow-lg">
+            <section className=" mt-14 grid md:grid-cols-2 gap-8 lg:gap-16 items-start max-w-6xl px-6 mx-auto py-14 md:py-18 lg:py-26 font-mono bg-gradient-to-r rounded-lg shadow-lg">
                 <div key={product.id} className="flex-col items-start gap-6">
                     <img
                         alt={product?.name}
@@ -73,10 +73,10 @@ export function ProductDetails() {
                                     <Droplet color="#3a88fe" className="mr-2 h-6 w-6 text-primary" />
                                     <span>{product.color}</span>
                                 </li>
-                                <li className="flex items-center">
+                                {/* <li className="flex items-center">
                                     <CloudSun className="mr-2 h-6 w-6 text-primary" />
                                     <span>{product.size}</span>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                         <div className="flex justify-center gap-6 items-center mt-6">
