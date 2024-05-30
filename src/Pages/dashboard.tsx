@@ -219,7 +219,7 @@ export function Dashboard() {
             <form className="mt-20 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto p-6 bg-white rounded-lg shadow-lg" onSubmit={handleSubmitStock}>
                 <h3 className="font-semibold text-lg tracking-tight mb-4">ADD STOCK</h3>
 
-                <select className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" onChange={handleSelectProduct} name="productId" value="">
+                <select className="mt-4 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" onChange={handleSelectProduct} name="productId">
                     <option value="" disabled>Select a choice</option>
                     {products?.map((product) => (
                         <option key={product.id} value={product.id}>
