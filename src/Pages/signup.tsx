@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import api from "@/api";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import SignupHero from "../hero/signup.png"
 
 export default function Signup() {
     const navigate = useNavigate()
@@ -45,7 +46,8 @@ export default function Signup() {
 
     return (
 
-        <div className=" w-full flex items-center justify-center mb-9 bg-[url('src/hero/signup.png')] bg-cover" >
+        <div className=" w-full flex items-center justify-center mb-9 bg-cover"
+            style={{ backgroundImage: `url(${SignupHero})` }}>
 
             <div className="relative text-center space-y-6 px-4 md:px-6 mt-24 pb-20 font-mono">
                 <div className="space-y-2 text-center">

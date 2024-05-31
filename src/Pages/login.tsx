@@ -7,6 +7,8 @@ import { Label } from "@radix-ui/react-label";
 import jwtDecode from "jwt-decode";
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import SignupHero from "../hero/signup.png"
+
 
 export function Login() {
     const navigate = useNavigate()
@@ -52,7 +54,8 @@ export function Login() {
     }
 
     return (
-        <div className=" w-full flex items-center justify-center mb-9 bg-[url('src/hero/signup.png')] bg-cover">
+        <div className=" w-full flex items-center justify-center mb-9 bg-cover"
+            style={{ backgroundImage: `url(${SignupHero})` }}>
             <div className=" inline-block max-w-sm space-y-6 pt-24 pb-32 w-auto font-mono" >
                 < div className="space-y-2 text-center" >
                     <h1 className="text-3xl font-bold">Welcome back 🤍</h1>
